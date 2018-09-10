@@ -2,7 +2,7 @@ const express = require("express"); // like from express import express
 
 const app = express();
 
-app.get("/loc", (req, res) => {
+app.get("/", (req, res) => {
   res.send({ hi: "there" }); //this is sort of out db right now and and accessing the browser is out using the GET request
 });
 
