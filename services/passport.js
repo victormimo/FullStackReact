@@ -20,7 +20,8 @@ passport.use(
       clientSecret: keys.googleClientSecret,
       //passport uses a callbackURL to bring userback. Therefore once theuser gives permission the app must have this route handler ready.
       //note: this url was arbritarily chosen not chosen by google, as long as on our google profile we have it allowed as a redirect url
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       //note profile is google.user  is mongodb
