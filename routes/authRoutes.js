@@ -21,8 +21,8 @@ module.exports = app => {
   });
 
   //this is the first call that has anything todowith cookie.
-  app.get("/api/currentuser", (req, res) => {
+  app.get("/api/current_user", (req, res) => {
     //below line not showing uprightnow
-    res.send(req.session); //req.user is simply the user making the request, what were doing hereis seeing if the encryption of using cookies isworking
+    res.send(req.user); //req.user is simply the user making the request, what were doing hereis seeing if the encryption of using cookies isworking
   });
 };

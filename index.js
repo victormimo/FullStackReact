@@ -8,16 +8,16 @@ require("./models/User");
 require("./services/passport.js");
 
 mongoose.connect(keys.mongoURI); //url to db
-
 const app = express();
-authRoutes(app); //calling routes to
 
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    maxAge: 2592000000,
     keys: [keys.cookieKey]
   })
 );
+
+authRoutes(app); //calling routes to
 
 app.use(passport.initialize());
 app.use(passport.session());

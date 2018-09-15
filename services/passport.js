@@ -5,14 +5,6 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("users"); //one argument means fetch out of mongoose. User is a model class
 
-passport.serializeUser((user, done) => {
-  done(null, user.id); //cookie
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => done(null, user)); //from cookie to user info
-});
-
 passport.use(
   new GoogleStrategy( // making new instance of object.this c ould also be done in another variable and put passed into Passport.use
     {
@@ -23,22 +15,26 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       //note profile is google.user  is mongodb
-      User.findOne({ googleID: profile.id }).then(existingUser => {
-        //existing user is predefinedby mongo
-        // .then is a promise. wont always use since mongo is async
-        if (existingUser) {
-          //already exists
-        } else {
-          new User({ googleID: profile.id }) // creates a new model instance
-            .save()
-            .then(user => {
-              //user is the new User object on callback... therefore useris the most up to date
-              done(null, user);
-            });
-        }
-      });
+      const existingUser = await User.findOne({ googleID: profile.id });
+      //existing user is predefinedby mongo
+      // .then is a promise. wont always use since mongo is async
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      const user = await new User({ googleID: profile.id }).save(); // creates a new model instance
+      //user is the new User object on callback... therefore useris the most up to date
+      done(null, user);
     }
   )
 );
+
+passport.serializeUser((user, done) => {
+  done(null, user.id); //cookie
+});
+
+passport.deserializeUser((id, done) => {
+  console.log("goobye");
+  User.findById(id).then(user => done(null, user)); //from cookie to user info
+});
