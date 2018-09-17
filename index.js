@@ -1,5 +1,4 @@
 const express = require("express"); // like from express import express
-const authRoutes = require("./routes/authRoutes");
 const mongoose = require("mongoose");
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
@@ -17,10 +16,10 @@ app.use(
   })
 );
 
-authRoutes(app); //calling routes to
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+require("./routes/authRoutes")(app);
 
 /* dynamic port binding */
 const PORT = process.env.PORT || 4000; // runtime variable, ie when its beginnning to be executed, heroku gives port. however only fully works in prod. if in dev use static port
