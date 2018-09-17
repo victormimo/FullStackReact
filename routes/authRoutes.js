@@ -13,11 +13,17 @@ module.exports = app => {
   );
 
   //callback route handler - the reason why this one is much shorter is because after callback itll have thecode immediately after in the URL, sopassport knows to take that thecode
-  app.get("/auth/google/callback", passport.authenticate("google"));
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google"),
+    (req, res) => {
+      res.redirect("/surveys"); // redirects once callback comes back
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     req.logout();
-    res.send(req.user);
+    res.redirect("/");
   });
 
   //this is the first call that has anything todowith cookie.

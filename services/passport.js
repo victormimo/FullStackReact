@@ -35,6 +35,5 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  console.log("goobye");
   User.findById(id).then(user => done(null, user)); //from cookie to user info
 });
