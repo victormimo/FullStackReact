@@ -10,3 +10,10 @@ export const fetchUser = () => async dispatch => {
 
   dispatch({ type: FETCH_USER, payload: res.data }); // dispatch function:
 };
+
+export const handleToken = token => async dispatch => {
+  //note - dispatch is actually already in react, redux-thunk just allows us to use it implicitely
+  const res = await axios.post("/api/stripe", token);
+
+  dispatch({ type: FETCH_USER, payload: res.data }); // dispatch function:
+};
