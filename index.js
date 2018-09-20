@@ -6,6 +6,7 @@ const bodyParser = require("body-parser"); //middleware therefore connected by a
 const keys = require("./config/keys");
 
 require("./models/User");
+require("./models/Survey");
 require("./services/passport.js");
 
 mongoose.connect(keys.mongoURI); //url to db
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 //changes for production
 if (process.env.NODE_ENV === "production") {

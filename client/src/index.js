@@ -8,6 +8,9 @@ import reduxThunk from "redux-thunk"; // upadtes reducers, gives access to dispa
 import App from "./components/App";
 import reducers from "./reducers";
 
+import axios from "axios";
+window.axios = axios;
+
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk)); // the store we make has a Provider
 //its a react component used to read changes from redux store - part of react-redux lib
 
